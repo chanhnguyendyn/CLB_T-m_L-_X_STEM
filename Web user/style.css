@@ -1,0 +1,322 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* Luôn có nền dự phòng đẹp trước khi gán ảnh nền tải lên */
+.home-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #7ec8e3;
+  background-image: var(--bg-image, linear-gradient(180deg, #87ceeb 0%, #d8f3ff 65%, #fff5cc 100%));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Lớp chứa các ảnh trang trí tự do ở bất kỳ vị trí nào */
+.decor-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.decor-item {
+  position: absolute;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  width: var(--w, auto);
+  height: var(--h, auto);
+  transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) scale(var(--scale, 1));
+  user-select: none;
+}
+
+/* Khối nội dung chính (tiêu đề + nút) */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1120px;
+  padding: 0 clamp(14px, 4vw, 36px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 3.5vh, 34px)
+}
+
+/* Tiêu đề cong nhẹ theo vòng cung (mẫu hình 2) */
+.curved-title {
+  width: 100%;
+  max-width: 1080px;
+  height: auto;
+  overflow: visible;
+}
+
+.curved-title-text {
+  fill: #ffe05d;
+  font-size: 46px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.28));
+}
+
+/* Nút bấm chọn (mẫu hình 3) */
+.cta-btn {
+  padding: clamp(10px, 1.8vw, 15px) clamp(22px, 4vw, 38px);
+  border-radius: 999px;
+  border: clamp(2px, 0.25vw, 2.5px) solid #141414;
+  background: linear-gradient(90deg, #ffe066 0%, #ffc25c 52%, #ff9d5c 100%);
+  color: #ffffff;
+  font-size: clamp(15px, 2.2vw, 24px);
+  font-weight: 800;
+  line-height: 1.2;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.45s ease;
+}
+
+.cta-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.03);
+}
+
+.cta-btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(14px);
+}
+
+.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Lớp phủ hiệu ứng đám mây lướt ngang chuyển trang */
+.cloud-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+  display: none;
+}
+
+.cloud-transition.is-active {
+  display: block;
+  pointer-events: auto;
+}
+
+.cloud-piece {
+ position: absolute;
+  width: 78vw;
+  min-width: 380px;
+  max-width: 980px;
+  height: auto;
+  opacity: 1;
+  user-select: none;
+  will-change: transform;
+}
+
+.cloud-1 {
+  top: -6%;
+  right: -78vw;
+}
+
+.cloud-2 {
+  top: 19%;
+  left: -78vw;
+}
+
+.cloud-3 {
+  top: 44%;
+  right: -82vw;
+}
+
+.cloud-4 {
+  top: 66%;
+  left: -82vw;
+}
+
+/* Khi kích hoạt: trượt vào phủ kín màn hình và giữ nguyên (forwards) */
+.cloud-transition.is-running .cloud-1 {
+  animation: cloudInFromRight1 0.85s cubic-bezier(0.22, 0.85, 0.36, 1) forwards;
+}
+
+.cloud-transition.is-running .cloud-3 {
+  animation: cloudInFromRight3 0.9s cubic-bezier(0.22, 0.85, 0.36, 1) 0.08s forwards;
+}
+
+.cloud-transition.is-running .cloud-2 {
+  animation: cloudInFromLeft2 0.88s cubic-bezier(0.22, 0.85, 0.36, 1) 0.04s forwards;
+}
+
+.cloud-transition.is-running .cloud-4 {
+  animation: cloudInFromLeft4 0.92s cubic-bezier(0.22, 0.85, 0.36, 1) 0.12s forwards;
+}
+
+@keyframes cloudInFromRight1 {
+  0% {
+    transform: translateX(0) scale(1.1);
+  }
+  100% {
+    transform: translateX(-82vw) scale(1.22);
+  }
+}
+
+@keyframes cloudInFromRight3 {
+  0% {
+    transform: translateX(0) scale(1.12);
+  }
+  100% {
+    transform: translateX(-86vw) scale(1.25);
+  }
+}
+
+@keyframes cloudInFromLeft2 {
+  0% {
+    transform: translateX(0) scale(1.14);
+  }
+  100% {
+    transform: translateX(82vw) scale(1.24);
+  }
+}
+
+@keyframes cloudInFromLeft4 {
+  0% {
+    transform: translateX(0) scale(1.16);
+  }
+  100% {
+    transform: translateX(86vw) scale(1.28);
+  }
+}
+
+/* Khi quay về chỗ cũ / mở ra */
+.cloud-transition.is-resetting .cloud-1,
+.cloud-transition.is-resetting .cloud-2,
+.cloud-transition.is-resetting .cloud-3,
+.cloud-transition.is-resetting .cloud-4 {
+  animation: none;
+  transform: translateX(0) scale(1);
+}
+
+@media (max-width: 640px) {
+  .cloud-piece {
+    width: 115vw;
+  }
+
+  .cloud-1 {
+    right: -115vw;
+  }
+
+  .cloud-3 {
+    right: -120vw;
+  }
+
+  .cloud-2 {
+    left: -115vw;
+  }
+
+  .cloud-4 {
+    left: -120vw;
+  }
+}
+
+.cloud-transition.is-opening .cloud-1 {
+  animation: cloudOutToRight1 0.85s cubic-bezier(0.22, 0.85, 0.36, 1) forwards;
+}
+
+.cloud-transition.is-opening .cloud-3 {
+  animation: cloudOutToRight3 0.9s cubic-bezier(0.22, 0.85, 0.36, 1) 0.06s forwards;
+}
+
+.cloud-transition.is-opening .cloud-2 {
+  animation: cloudOutToLeft2 0.88s cubic-bezier(0.22, 0.85, 0.36, 1) 0.04s forwards;
+}
+
+.cloud-transition.is-opening .cloud-4 {
+  animation: cloudOutToLeft4 0.92s cubic-bezier(0.22, 0.85, 0.36, 1) 0.1s forwards;
+}
+
+@keyframes cloudOutToRight1 {
+  0% {
+    transform: translateX(-82vw) scale(1.22);
+  }
+  100% {
+    transform: translateX(0) scale(1.05);
+  }
+}
+
+@keyframes cloudOutToRight3 {
+  0% {
+    transform: translateX(-86vw) scale(1.25);
+  }
+  100% {
+    transform: translateX(0) scale(1.12);
+  }
+}
+
+@keyframes cloudOutToLeft2 {
+  0% {
+    transform: translateX(82vw) scale(1.24);
+  }
+  100% {
+    transform: translateX(0) scale(1.14);
+  }
+}
+
+@keyframes cloudOutToLeft4 {
+  0% {
+    transform: translateX(86vw) scale(1.28);
+  }
+  100% {
+    transform: translateX(0) scale(1.16);
+  }
+}
+
+/* Khi vừa vào trang mới: mây đang ở vị trí che kín rồi mở ngược ra */
+.cloud-transition.is-entering .cloud-1 {
+  transform: translateX(-82vw) scale(1.22);
+  animation: cloudOutToRight1 0.85s cubic-bezier(0.22, 0.85, 0.36, 1) forwards;
+}
+
+.cloud-transition.is-entering .cloud-3 {
+  transform: translateX(-86vw) scale(1.25);
+  animation: cloudOutToRight3 0.9s cubic-bezier(0.22, 0.85, 0.36, 1) 0.06s forwards;
+}
+
+.cloud-transition.is-entering .cloud-2 {
+  transform: translateX(82vw) scale(1.24);
+  animation: cloudOutToLeft2 0.88s cubic-bezier(0.22, 0.85, 0.36, 1) 0.04s forwards;
+}
+
+.cloud-transition.is-entering .cloud-4 {
+  transform: translateX(86vw) scale(1.28);
+  animation: cloudOutToLeft4 0.92s cubic-bezier(0.22, 0.85, 0.36, 1) 0.1s forwards;
+}
+
+/* Màn hình máy tính bảng / laptop vừa */
+@media (min-width: 641px) and (max-width: 1100px) {
+  .curved-title-text {
+    font-size: 48px;
+  }
+}

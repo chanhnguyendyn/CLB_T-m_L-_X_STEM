@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chạm vào khoa học – Thấu hiểu chính mình</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="home-stage" id="homeStage">
+    <div class="decor-layer" id="decorLayer"></div>
+
+    <div class="hero-content">
+     <svg class="curved-title" viewBox="0 0 1200 180" aria-label="Chạm vào khoa học – Thấu hiểu chính mình">
+        <defs>
+          <path id="titleArcPath" d="M 50,132 Q 600,56 1150,132" />
+        </defs>
+        <text class="curved-title-text">
+          <textPath href="#titleArcPath" startOffset="50%" text-anchor="middle">
+            Chạm vào khoa học – Thấu hiểu chính mình
+          </textPath>
+        </text>
+      </svg>
+
+      <button type="button" class="cta-btn is-hidden" id="exploreBtn">
+        Khám phá trạm trải nghiệm
+      </button>
+    </div>
+  </main>
+
+  <div class="cloud-transition" id="cloudTransition" aria-hidden="true">
+    <img src="assets/ui/decor/clouds/cloud-1.png" alt="" class="cloud-piece cloud-1" />
+    <img src="assets/ui/decor/clouds/cloud-1.png" alt="" class="cloud-piece cloud-2" />
+    <img src="assets/ui/decor/clouds/cloud-1.png" alt="" class="cloud-piece cloud-3" />
+    <img src="assets/ui/decor/clouds/cloud-1.png" alt="" class="cloud-piece cloud-4" />
+  </div>
+
+  <script src="effects.js"></script>
+  <script src="style.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
