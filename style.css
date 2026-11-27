@@ -779,3 +779,19 @@ body {
     display: none;
   }
 }
+
+@media (max-width: 768px) {
+  .cloud-1,
+  .cloud-2,
+  .cloud-3,
+  .cloud-4,
+  .cloud-5,
+  .cloud-6,
+  .cloud-7,
+  .cloud-8,
+  .cloud-9,
+  .cloud-10,
+  .cloud-11 {
+    max-width: 65vw;
+  }
+}
