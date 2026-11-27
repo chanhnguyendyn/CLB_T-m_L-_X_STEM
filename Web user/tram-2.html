@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trạm 2: “Xưởng quang phổ” - Polarized Tape Art</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-station="tram2">
+  <main class="home-stage detail-stage" id="detailStage">
+    <div class="decor-layer" id="decorLayer"></div>
+
+    <div class="detail-container">
+      <h1 class="detail-heading">
+        Trạm 2: “Xưởng quang phổ”<br />
+        <span class="detail-heading-sub">- Polarized Tape Art</span>
+      </h1>
+
+      <div class="sheet-box" id="sheetContentBox">
+        <div class="sheet-box-text" id="sheetContentText">Đang tải nội dung...</div>
+      </div>
+
+      <div class="detail-controls detail-controls-reverse">
+        <button type="button" class="arrow-nav arrow-left is-hidden" id="prevStationBtn" data-target="tram-1.html">
+          <span class="arrow-label">
+            Quay về trạm 1:<br />“Đất nặn cảm xúc”
+          </span>
+        </button>
+
+        <button type="button" class="complete-btn is-hidden" id="completeGameBtn">
+          Hoàn tất trò chơi<br />Nhận quà
+        </button>
+      </div>
+    </div>
+
+    <div class="result-modal" id="resultModal" aria-hidden="true">
+      <div class="result-modal-backdrop" id="resultModalBackdrop"></div>
+      <div class="result-box" role="dialog" aria-modal="true">
+        <div class="tick-row" id="tickRow"></div>
+        <p class="result-message">Hoàn tất trò chơi - Đưa<br />cho người đứng quầy</p>
+        <button type="button" class="result-close-btn" id="closeResultBtn">Đóng</button>
+      </div>
+    </div>
+  </main>
+
+  <div class="cloud-transition" id="cloudTransition" aria-hidden="true">
+    <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-1" />
+    <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-2" />
+    <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-3" />
+    <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-4" />
+  </div>
+
+  <script src="effects.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

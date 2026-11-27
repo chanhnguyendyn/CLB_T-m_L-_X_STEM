@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trạm trải nghiệm – Chạm vào khoa học</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="home-stage station-stage" id="stationStage">
+    <div class="decor-layer" id="decorLayer"></div>
+
+    <div class="station-grid" id="stationGrid">
+      <button
+        type="button"
+        class="station-tile is-hidden"
+        id="station1Btn"
+        data-target="tram-1.html"
+        aria-label="Trạm 1: Đất nặn cảm xúc"
+      >
+        <img
+          src="assets/ui/decor/emoji-happy.png"
+          alt=""
+          class="station-sticker sticker-happy"
+        />
+        <span class="station-title">Trạm 1</span>
+        <span class="station-desc">Đất nặn<br />cảm xúc</span>
+        <img
+          src="assets/ui/decor/emoji-sad.png"
+          alt=""
+          class="station-sticker sticker-sad"
+        />
+      </button>
+
+      <button
+        type="button"
+        class="station-tile is-hidden"
+        id="station2Btn"
+        data-target="tram-2.html"
+        aria-label="Trạm 2: Xưởng quang phổ"
+      >
+        <span class="station-title">Trạm 2</span>
+        <span class="station-desc">Xưởng<br />quang phổ</span>
+        <img
+          src="assets/ui/decor/prism-spectrum.png"
+          alt=""
+          class="station-sticker sticker-prism"
+        />
+      </button>
+    </div>
+  </main>
+
+  <div class="cloud-transition" id="cloudTransition" aria-hidden="true">
+    <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-1" />
+    <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-2" />
+    <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-3" />
+    <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-4" />
+  </div>
+
+  <script src="effects.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

@@ -320,3 +320,349 @@ body {
     font-size: 48px;
   }
 }
+
+
+.station-grid {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 920px;
+  padding: 24px clamp(16px, 4vw, 40px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(32px, 8vw, 120px);
+}
+
+.station-tile {
+  position: relative;
+  width: clamp(190px, 26vw, 270px);
+  min-height: clamp(250px, 36vw, 355px);
+  padding: clamp(22px, 3vw, 32px) clamp(14px, 2vw, 22px);
+  border: none;
+  border-radius: 26px;
+  background: linear-gradient(90deg, #ffe066 0%, #ffc25c 52%, #ff9d5c 100%);
+  color: #111111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(14px, 2.2vh, 24px);
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+  transition: transform 0.22s ease, filter 0.22s ease, opacity 0.45s ease;
+}
+
+.station-tile.is-visible:hover {
+  transform: translateY(-6px) scale(1.02);
+  filter: brightness(1.03);
+}
+
+.station-tile.is-visible:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.station-title {
+  font-size: clamp(24px, 3.2vw, 40px);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.station-desc {
+  font-size: clamp(22px, 3vw, 38px);
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
+}
+
+/* Các ảnh trang trí đi kèm 2 thẻ trạm */
+.station-sticker {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sticker-happy {
+  width: clamp(68px, 10.5vw, 118px);
+  top: clamp(-36px, -5vw, -22px);
+  left: clamp(-38px, -5.5vw, -24px);
+}
+
+.sticker-sad {
+  width: clamp(86px, 13vw, 148px);
+  bottom: clamp(-44px, -6vw, -28px);
+  right: clamp(-56px, -7.5vw, -36px);
+}
+
+.sticker-prism {
+  width: clamp(120px, 19vw, 215px);
+  bottom: clamp(-14px, -2vw, -6px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 640px) {
+  .station-grid {
+    flex-direction: column;
+    gap: 54px;
+  }
+
+  .station-tile {
+    width: min(72vw, 250px);
+    min-height: 230px;
+  }
+}
+
+.detail-stage {
+  align-items: flex-start;
+  overflow-y: auto;
+  padding: clamp(20px, 4vh, 44px) clamp(16px, 5vw, 64px);
+}
+
+.detail-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1120px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 3vh, 28px);
+}
+
+.detail-heading {
+  color: #ff9c38;
+  font-size: clamp(28px, 4.4vw, 54px);
+  font-weight: 800;
+  line-height: 1.18;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.detail-heading-sub {
+  display: inline-block;
+  padding-left: clamp(24px, 6vw, 92px);
+}
+
+/* Hình chữ nhật vàng-cam tự co kích cỡ theo nội dung chữ */
+.sheet-box {
+  width: fit-content;
+  min-width: min(100%, 420px);
+  max-width: 100%;
+  min-height: 120px;
+  padding: clamp(18px, 2.8vw, 30px) clamp(22px, 3.6vw, 40px);
+  border-radius: 18px;
+  background: linear-gradient(90deg, #ffe066 0%, #ffc25c 52%, #ff9d5c 100%);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+}
+
+.sheet-box-text {
+  color: #141414;
+  font-size: clamp(17px, 2vw, 24px);
+  font-weight: 600;
+  line-height: 1.45;
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+/* Hàng nút điều khiển phía dưới */
+.detail-controls {
+  width: 100%;
+  margin-top: clamp(6px, 1.5vh, 14px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Nút xanh lá "Hoàn tất trò chơi / Nhận quà" */
+.complete-btn {
+  margin-left: clamp(0px, 6vw, 72px);
+  padding: clamp(12px, 1.6vw, 18px) clamp(24px, 3.2vw, 42px);
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #86dc57 0%, #b4e46b 100%);
+  color: #ffffff;
+  font-size: clamp(18px, 2.4vw, 30px);
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.45s ease;
+}
+
+.detail-controls-reverse .complete-btn {
+  margin-left: 0;
+  margin-right: clamp(0px, 4vw, 48px);
+}
+
+.complete-btn.is-visible:hover,
+.arrow-nav.is-visible:hover {
+  transform: translateY(-3px) scale(1.02);
+  filter: brightness(1.03);
+}
+
+.complete-btn.is-visible:active,
+.arrow-nav.is-visible:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+/* Nút mũi tên điều hướng qua lại giữa 2 trạm */
+.arrow-nav {
+  position: relative;
+  border: none;
+  background: linear-gradient(90deg, #ffe066 0%, #ffc25c 52%, #ff9d5c 100%);
+  color: #111111;
+  font-size: clamp(16px, 2.1vw, 28px);
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.45s ease;
+}
+
+.arrow-right {
+  padding: clamp(12px, 1.5vw, 16px) clamp(20px, 2.4vw, 30px);
+  border-radius: 14px 0 0 14px;
+  margin-right: clamp(46px, 5.5vw, 72px);
+}
+
+.arrow-right::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  border-top: clamp(34px, 4.4vw, 56px) solid transparent;
+  border-bottom: clamp(34px, 4.4vw, 56px) solid transparent;
+  border-left: clamp(44px, 5.6vw, 72px) solid #ff9d5c;
+}
+
+.arrow-left {
+  padding: clamp(12px, 1.5vw, 16px) clamp(20px, 2.4vw, 30px);
+  border-radius: 0 14px 14px 0;
+  margin-left: clamp(46px, 5.5vw, 72px);
+}
+
+.arrow-left::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  transform: translateY(-50%);
+  border-top: clamp(34px, 4.4vw, 56px) solid transparent;
+  border-bottom: clamp(34px, 4.4vw, 56px) solid transparent;
+  border-right: clamp(44px, 5.6vw, 72px) solid #ff9d5c;
+}
+
+.arrow-label {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+/* Box thông báo hoàn thành (1 tick hoặc 2 tick) */
+.result-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.result-modal.is-open {
+  display: flex;
+}
+
+.result-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.result-box {
+  position: relative;
+  z-index: 2;
+  width: min(92vw, 640px);
+  padding: clamp(28px, 4vw, 44px) clamp(22px, 4vw, 40px);
+  border: 3px solid #141414;
+  border-radius: 28px;
+  background: #ffffff;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  text-align: center;
+}
+
+.tick-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(24px, 5vw, 56px);
+}
+
+.tick-badge {
+  width: clamp(92px, 16vw, 150px);
+  height: clamp(92px, 16vw, 150px);
+  border-radius: 50%;
+  background: #05b300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 14px rgba(5, 179, 0, 0.25);
+}
+
+.tick-badge svg {
+  width: 62%;
+  height: 62%;
+}
+
+.result-message {
+  color: #000000;
+  font-size: clamp(22px, 3.6vw, 40px);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.result-close-btn {
+  padding: 10px 28px;
+  border: 2px solid #141414;
+  border-radius: 999px;
+  background: #ffe066;
+  color: #141414;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 720px) {
+  .detail-controls,
+  .detail-controls-reverse {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .complete-btn,
+  .detail-controls-reverse .complete-btn {
+    margin: 0;
+    width: 100%;
+  }
+
+  .arrow-right,
+  .arrow-left {
+    margin: 0 auto;
+    border-radius: 14px;
+  }
+
+  .arrow-right::after,
+  .arrow-left::before {
+    display: none;
+  }
+}
