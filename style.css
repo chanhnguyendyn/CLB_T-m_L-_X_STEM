@@ -413,13 +413,6 @@ body {
   100% { transform: translateX(0) scale(1); }
 }
 
-@media (max-width: 640px) {
-  .cloud-piece {
-    width: 115vw;
-    min-width: 360px;
-  }
-}
-
 @media (min-width: 641px) and (max-width: 1100px) {
   .curved-title-text {
     font-size: 48px;
@@ -784,22 +777,6 @@ body {
   }
 }
 
-@media (max-width: 768px) {
-  .cloud-1,
-  .cloud-2,
-  .cloud-3,
-  .cloud-4,
-  .cloud-5,
-  .cloud-6,
-  .cloud-7,
-  .cloud-8,
-  .cloud-9,
-  .cloud-10,
-  .cloud-11 {
-    max-width: 65vw;
-  }
-}
-
 @media (prefers-color-scheme: dark) {
   body {
     background-color: #ffffff;
@@ -807,30 +784,131 @@ body {
   }
 }
 
+/* =========================================================
+   TỐI ƯU MÂY CHUYỂN TRANG CHO MÀN HÌNH ĐIỆN THOẠI (<= 768px)
+   ========================================================= */
 @media (max-width: 768px) {
-  /* Ép các mảnh mây to theo chiều cao màn hình điện thoại để không bị hở trên/dưới */
-  .cloud-1, .cloud-2, .cloud-3, .cloud-4,
-  .cloud-5, .cloud-6, .cloud-7, .cloud-8,
-  .cloud-9, .cloud-10, .cloud-11 {
-    width: auto !important;
-    height: 48vh !important; /* Mỗi đám cao gần nửa màn hình điện thoại */
-    max-width: none !important;
+  .cloud-piece {
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    height: 52vh;
   }
 
-  /* Phủ kín phần đỉnh và chữ tiêu đề trên điện thoại */
-  .cloud-9, .cloud-10, .cloud-11 {
-    top: -8vh !important;
-    height: 55vh !important;
+  /* Đẩy mây bên trái ra hẳn ngoài mép trái khi đứng yên */
+  .cloud-9,
+  .cloud-11,
+  .cloud-7,
+  .cloud-1,
+  .cloud-3,
+  .cloud-5 {
+    left: -140vw;
   }
 
-  /* Phủ kín phần giữa màn hình */
-  .cloud-1, .cloud-2, .cloud-3, .cloud-4 {
-    top: 25vh !important;
+  /* Đẩy mây bên phải ra hẳn ngoài mép phải khi đứng yên */
+  .cloud-10,
+  .cloud-8,
+  .cloud-2,
+  .cloud-4,
+  .cloud-6 {
+    right: -140vw;
   }
 
-  /* Phủ kín phần đáy và các nút bấm phía dưới */
-  .cloud-5, .cloud-6, .cloud-7, .cloud-8 {
-    top: 58vh !important;
+  /* Chia 3 tầng trên - giữa - dưới để phủ kín màn hình dọc */
+  .cloud-9,
+  .cloud-10,
+  .cloud-11 {
+    top: -10vh;
+    height: 56vh;
+  }
+
+  .cloud-1,
+  .cloud-2,
+  .cloud-3,
+  .cloud-4 {
+    top: 24vh;
+  }
+
+  .cloud-5,
+  .cloud-6,
+  .cloud-7,
+  .cloud-8 {
+    top: 56vh;
+  }
+
+  /* Đóng mây trên điện thoại */
+  .cloud-transition.is-closing .cloud-9,
+  .cloud-transition.is-closing .cloud-11,
+  .cloud-transition.is-closing .cloud-7,
+  .cloud-transition.is-closing .cloud-1,
+  .cloud-transition.is-closing .cloud-3,
+  .cloud-transition.is-closing .cloud-5 {
+    animation: mobileCloudCloseLeft 0.85s cubic-bezier(0.22, 0.85, 0.36, 1) forwards;
+  }
+
+  .cloud-transition.is-closing .cloud-10,
+  .cloud-transition.is-closing .cloud-8,
+  .cloud-transition.is-closing .cloud-2,
+  .cloud-transition.is-closing .cloud-4,
+  .cloud-transition.is-closing .cloud-6 {
+    animation: mobileCloudCloseRight 0.85s cubic-bezier(0.22, 0.85, 0.36, 1) forwards;
+  }
+
+  /* Trạng thái đã phủ kín trên điện thoại */
+  .cloud-transition.is-covered .cloud-9,
+  .cloud-transition.is-covered .cloud-11,
+  .cloud-transition.is-covered .cloud-7,
+  .cloud-transition.is-covered .cloud-1,
+  .cloud-transition.is-covered .cloud-3,
+  .cloud-transition.is-covered .cloud-5 {
+    animation: none;
+    transform: translateX(145vw) scale(1.45);
+  }
+
+  .cloud-transition.is-covered .cloud-10,
+  .cloud-transition.is-covered .cloud-8,
+  .cloud-transition.is-covered .cloud-2,
+  .cloud-transition.is-covered .cloud-4,
+  .cloud-transition.is-covered .cloud-6 {
+    animation: none;
+    transform: translateX(-145vw) scale(1.45);
+  }
+
+  /* Mở mây trên điện thoại */
+  .cloud-transition.is-opening .cloud-9,
+  .cloud-transition.is-opening .cloud-11,
+  .cloud-transition.is-opening .cloud-7,
+  .cloud-transition.is-opening .cloud-1,
+  .cloud-transition.is-opening .cloud-3,
+  .cloud-transition.is-opening .cloud-5 {
+    animation: mobileCloudOpenLeft 0.85s cubic-bezier(0.22, 0.85, 0.36, 1) forwards;
+  }
+
+  .cloud-transition.is-opening .cloud-10,
+  .cloud-transition.is-opening .cloud-8,
+  .cloud-transition.is-opening .cloud-2,
+  .cloud-transition.is-opening .cloud-4,
+  .cloud-transition.is-opening .cloud-6 {
+    animation: mobileCloudOpenRight 0.85s cubic-bezier(0.22, 0.85, 0.36, 1) forwards;
   }
 }
 
+@keyframes mobileCloudCloseLeft {
+  0% { transform: translateX(0) scale(1.1); }
+  100% { transform: translateX(145vw) scale(1.45); }
+}
+
+@keyframes mobileCloudCloseRight {
+  0% { transform: translateX(0) scale(1.1); }
+  100% { transform: translateX(-145vw) scale(1.45); }
+}
+
+@keyframes mobileCloudOpenLeft {
+  0% { transform: translateX(145vw) scale(1.45); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes mobileCloudOpenRight {
+  0% { transform: translateX(-145vw) scale(1.45); }
+  100% { transform: translateX(0) scale(1); }
+}
