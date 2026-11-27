@@ -5,7 +5,7 @@
 }
 
 :root {
-  color-scheme: light;
+  color-scheme: only light;
 }
 
 html,
@@ -800,4 +800,10 @@ body {
   }
 }
 
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #ffffff;
+    color: #111111;
+  }
+}
 
