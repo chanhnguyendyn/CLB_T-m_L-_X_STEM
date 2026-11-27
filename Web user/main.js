@@ -168,8 +168,8 @@ const StationDetailApp = (() => {
     sheetCsvUrl:
       "https://docs.google.com/spreadsheets/d/e/2PACX-1vQSLGZ0HNO25v40lkQn2Y2WC1yDicz0OEjLOaRODdy0j0V6hAYrxBC_EfsxJEKEUv4-wpLRNb_1MRgw/pub?gid=0&single=true&output=csv",
     fallbackContent: {
-      tram1: "Nội dung Trạm 1 lấy từ Google Sheets sẽ hiển thị tại đây. Kích cỡ hình chữ nhật tự động giãn theo độ dài chữ.",
-      tram2: "Nội dung Trạm 2 lấy từ Google Sheets sẽ hiển thị tại đây. Kích cỡ hình chữ nhật tự động giãn theo độ dài chữ."
+      tram1: "Đang tải nội dung...",
+      tram2: "Đang tải nội dung..."
     }
   };
 
