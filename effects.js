@@ -1,6 +1,7 @@
 const WebEffects = (() => {
   const ARRIVAL_KEY = "cloud_arriving_v1";
   let isTransitioning = false;
+  let openCleanupTimer = null;
 
   function getCloudContainer() {
     return document.getElementById("cloudTransition");
@@ -8,6 +9,10 @@ const WebEffects = (() => {
 
   function clearCloudStates(container) {
     if (!container) return;
+    if (openCleanupTimer) {
+      clearTimeout(openCleanupTimer);
+      openCleanupTimer = null;
+    }
     container.classList.remove("is-closing", "is-covered", "is-opening");
   }
 
@@ -17,6 +22,7 @@ const WebEffects = (() => {
 
     const container = getCloudContainer();
     if (!container) {
+      isTransitioning = false;
       if (typeof onCoveredCallback === "function") onCoveredCallback();
       return;
     }
@@ -38,7 +44,10 @@ const WebEffects = (() => {
 
   function openCloudsOnCurrentPage(delayMs = 80) {
     const container = getCloudContainer();
-    if (!container) return;
+    if (!container) {
+      isTransitioning = false;
+      return;
+    }
 
     // Giữ trạng thái che kín ngay khi vừa sang trang mới
     clearCloudStates(container);
@@ -50,6 +59,11 @@ const WebEffects = (() => {
       void container.offsetWidth;
       container.classList.add("is-opening");
       isTransitioning = false;
+
+      openCleanupTimer = setTimeout(() => {
+        container.classList.remove("is-opening");
+        openCleanupTimer = null;
+      }, 960);
     }, delayMs);
   }
 
@@ -57,7 +71,6 @@ const WebEffects = (() => {
     isTransitioning = false;
     const container = getCloudContainer();
     clearCloudStates(container);
-    void container.offsetWidth;
   }
 
   function revealElementAfterDelay(el, delayMs = 300) {

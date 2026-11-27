@@ -788,17 +788,20 @@ body {
    TỐI ƯU MÂY CHUYỂN TRANG CHO MÀN HÌNH ĐIỆN THOẠI (<= 768px)
    ========================================================= */
 @media (max-width: 768px) {
-  /* Ẩn hẳn mây khi không chuyển trang để không che chữ */
   .cloud-transition {
     opacity: 0;
     visibility: hidden;
   }
 
   .cloud-transition.is-closing,
-  .cloud-transition.is-covered,
-  .cloud-transition.is-opening {
+  .cloud-transition.is-covered {
     opacity: 1;
     visibility: visible;
+  }
+
+  .cloud-transition.is-opening {
+    visibility: visible;
+    animation: mobileCloudContainerFadeOut 0.9s ease forwards;
   }
 
   .cloud-piece {
@@ -808,23 +811,22 @@ body {
     height: 52vh;
   }
 
-  /* Đẩy mây bên trái ra hẳn ngoài mép trái khi đứng yên */
+  /* Đẩy mây ra hẳn ngoài 2 mép màn hình dọc khi đứng yên */
   .cloud-9,
   .cloud-11,
   .cloud-7,
   .cloud-1,
   .cloud-3,
   .cloud-5 {
-    left: -140vw;
+    left: -180vw;
   }
 
-  /* Đẩy mây bên phải ra hẳn ngoài mép phải khi đứng yên */
   .cloud-10,
   .cloud-8,
   .cloud-2,
   .cloud-4,
   .cloud-6 {
-    right: -140vw;
+    right: -180vw;
   }
 
   /* Chia 3 tầng trên - giữa - dưới để phủ kín màn hình dọc */
@@ -875,7 +877,7 @@ body {
   .cloud-transition.is-covered .cloud-3,
   .cloud-transition.is-covered .cloud-5 {
     animation: none;
-    transform: translateX(145vw) scale(1.45);
+    transform: translateX(185vw) scale(1.45);
   }
 
   .cloud-transition.is-covered .cloud-10,
@@ -884,7 +886,7 @@ body {
   .cloud-transition.is-covered .cloud-4,
   .cloud-transition.is-covered .cloud-6 {
     animation: none;
-    transform: translateX(-145vw) scale(1.45);
+    transform: translateX(-185vw) scale(1.45);
   }
 
   /* Mở mây trên điện thoại */
@@ -906,22 +908,27 @@ body {
   }
 }
 
+@keyframes mobileCloudContainerFadeOut {
+  0%, 75% { opacity: 1; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
 @keyframes mobileCloudCloseLeft {
   0% { transform: translateX(0) scale(1.1); }
-  100% { transform: translateX(145vw) scale(1.45); }
+  100% { transform: translateX(185vw) scale(1.45); }
 }
 
 @keyframes mobileCloudCloseRight {
   0% { transform: translateX(0) scale(1.1); }
-  100% { transform: translateX(-145vw) scale(1.45); }
+  100% { transform: translateX(-185vw) scale(1.45); }
 }
 
 @keyframes mobileCloudOpenLeft {
-  0% { transform: translateX(145vw) scale(1.45); }
+  0% { transform: translateX(185vw) scale(1.45); }
   100% { transform: translateX(0) scale(1); }
 }
 
 @keyframes mobileCloudOpenRight {
-  0% { transform: translateX(-145vw) scale(1.45); }
+  0% { transform: translateX(-185vw) scale(1.45); }
   100% { transform: translateX(0) scale(1); }
 }
