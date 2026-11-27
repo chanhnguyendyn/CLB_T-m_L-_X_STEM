@@ -807,3 +807,30 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+  /* Ép các mảnh mây to theo chiều cao màn hình điện thoại để không bị hở trên/dưới */
+  .cloud-1, .cloud-2, .cloud-3, .cloud-4,
+  .cloud-5, .cloud-6, .cloud-7, .cloud-8,
+  .cloud-9, .cloud-10, .cloud-11 {
+    width: auto !important;
+    height: 48vh !important; /* Mỗi đám cao gần nửa màn hình điện thoại */
+    max-width: none !important;
+  }
+
+  /* Phủ kín phần đỉnh và chữ tiêu đề trên điện thoại */
+  .cloud-9, .cloud-10, .cloud-11 {
+    top: -8vh !important;
+    height: 55vh !important;
+  }
+
+  /* Phủ kín phần giữa màn hình */
+  .cloud-1, .cloud-2, .cloud-3, .cloud-4 {
+    top: 25vh !important;
+  }
+
+  /* Phủ kín phần đáy và các nút bấm phía dưới */
+  .cloud-5, .cloud-6, .cloud-7, .cloud-8 {
+    top: 58vh !important;
+  }
+}
+
