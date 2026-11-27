@@ -794,21 +794,17 @@ body {
   }
 
   .cloud-transition.is-closing,
-  .cloud-transition.is-covered {
+  .cloud-transition.is-covered,
+  .cloud-transition.is-opening {
     opacity: 1;
     visibility: visible;
-  }
-
-  .cloud-transition.is-opening {
-    visibility: visible;
-    animation: mobileCloudContainerFadeOut 0.9s ease forwards;
   }
 
   .cloud-piece {
     width: auto;
     min-width: 0;
     max-width: none;
-    height: 52vh;
+    height: 46vh;
   }
 
   /* Đẩy mây ra hẳn ngoài 2 mép màn hình dọc khi đứng yên */
@@ -818,7 +814,7 @@ body {
   .cloud-1,
   .cloud-3,
   .cloud-5 {
-    left: -180vw;
+    left: -190vw;
   }
 
   .cloud-10,
@@ -826,7 +822,7 @@ body {
   .cloud-2,
   .cloud-4,
   .cloud-6 {
-    right: -180vw;
+    right: -190vw;
   }
 
   /* Chia 3 tầng trên - giữa - dưới để phủ kín màn hình dọc */
@@ -834,7 +830,7 @@ body {
   .cloud-10,
   .cloud-11 {
     top: -10vh;
-    height: 56vh;
+    height: 50vh;
   }
 
   .cloud-1,
@@ -877,7 +873,7 @@ body {
   .cloud-transition.is-covered .cloud-3,
   .cloud-transition.is-covered .cloud-5 {
     animation: none;
-    transform: translateX(185vw) scale(1.45);
+    transform: translateX(190vw) scale(1.45);
   }
 
   .cloud-transition.is-covered .cloud-10,
@@ -886,10 +882,10 @@ body {
   .cloud-transition.is-covered .cloud-4,
   .cloud-transition.is-covered .cloud-6 {
     animation: none;
-    transform: translateX(-185vw) scale(1.45);
+    transform: translateX(-190vw) scale(1.45);
   }
 
-  /* Mở mây trên điện thoại */
+  /* Mở mây trên điện thoại: đẩy lùi ra ngoài biên và làm mờ dần */
   .cloud-transition.is-opening .cloud-9,
   .cloud-transition.is-opening .cloud-11,
   .cloud-transition.is-opening .cloud-7,
@@ -908,27 +904,40 @@ body {
   }
 }
 
-@keyframes mobileCloudContainerFadeOut {
-  0%, 75% { opacity: 1; visibility: visible; }
-  100% { opacity: 0; visibility: hidden; }
-}
-
 @keyframes mobileCloudCloseLeft {
   0% { transform: translateX(0) scale(1.1); }
-  100% { transform: translateX(185vw) scale(1.45); }
+  100% { transform: translateX(190vw) scale(1.45); }
 }
 
 @keyframes mobileCloudCloseRight {
   0% { transform: translateX(0) scale(1.1); }
-  100% { transform: translateX(-185vw) scale(1.45); }
+  100% { transform: translateX(-190vw) scale(1.45); }
 }
 
 @keyframes mobileCloudOpenLeft {
-  0% { transform: translateX(185vw) scale(1.45); }
-  100% { transform: translateX(0) scale(1); }
+  0% {
+    transform: translateX(190vw) scale(1.45);
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-20vw) scale(0.8);
+    opacity: 0;
+  }
 }
 
 @keyframes mobileCloudOpenRight {
-  0% { transform: translateX(-185vw) scale(1.45); }
-  100% { transform: translateX(0) scale(1); }
+  0% {
+    transform: translateX(-190vw) scale(1.45);
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(20vw) scale(0.8);
+    opacity: 0;
+  }
 }
