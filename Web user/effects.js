@@ -1,65 +1,102 @@
 const WebEffects = (() => {
-  function revealElementAfterDelay(element, delayMs = 650) {
-    if (!element) return;
+  const ARRIVAL_KEY = "cloud_arriving_v1";
+  let isTransitioning = false;
 
-    setTimeout(() => {
-      element.classList.remove("is-hidden");
-      element.classList.add("is-visible");
-    }, delayMs);
+  function getCloudContainer() {
+    return document.getElementById("cloudTransition");
   }
 
-  function playCloudTransition(onNavigate, coverMs = 920, openMs = 920) {
-    const overlay = document.getElementById("cloudTransition");
-    if (!overlay) {
-      if (typeof onNavigate === "function") onNavigate();
+  function clearCloudStates(container) {
+    if (!container) return;
+    container.classList.remove("is-closing", "is-covered", "is-opening");
+  }
+
+  function playCloudTransition(onCoveredCallback, coverDurationMs = 950, holdMs = 80) {
+    if (isTransitioning) return;
+    isTransitioning = true;
+
+    const container = getCloudContainer();
+    if (!container) {
+      if (typeof onCoveredCallback === "function") onCoveredCallback();
       return;
     }
 
-    overlay.classList.remove("is-running", "is-opening", "is-entering");
-    overlay.classList.add("is-active");
+    clearCloudStates(container);
+    void container.offsetWidth;
+    container.classList.add("is-closing");
 
-    void overlay.offsetWidth;
-    // Bước 1: 4 đám mây trượt vào phủ kín màn hình
-    overlay.classList.add("is-running");
-
-    // Bước 2: Sau khi phủ kín, mở ngược mây về chỗ cũ
     setTimeout(() => {
-      overlay.classList.remove("is-running");
-      void overlay.offsetWidth;
-      overlay.classList.add("is-opening");
-    }, coverMs);
+      try {
+        sessionStorage.setItem(ARRIVAL_KEY, "1");
+      } catch (e) {}
 
-    // Bước 3: Chuyển sang trang mới khi mây đang mở về chỗ cũ
-    setTimeout(() => {
-      if (typeof onNavigate === "function") {
-        onNavigate();
+      if (typeof onCoveredCallback === "function") {
+        onCoveredCallback();
       }
-    }, coverMs + Math.floor(openMs * 0.65));
+    }, coverDurationMs + holdMs);
   }
 
-  function openCloudsOnPageEnter(openMs = 950) {
-    const overlay = document.getElementById("cloudTransition");
-    if (!overlay) return;
+  function openCloudsOnCurrentPage(delayMs = 80) {
+    const container = getCloudContainer();
+    if (!container) return;
 
-    overlay.classList.remove("is-running", "is-opening");
-    overlay.classList.add("is-active", "is-entering");
+    // Giữ trạng thái che kín ngay khi vừa sang trang mới
+    clearCloudStates(container);
+    container.classList.add("is-covered");
+    void container.offsetWidth;
 
     setTimeout(() => {
-      overlay.classList.remove("is-entering", "is-active");
-    }, openMs);
+      container.classList.remove("is-covered");
+      void container.offsetWidth;
+      container.classList.add("is-opening");
+      isTransitioning = false;
+    }, delayMs);
   }
 
   function resetCloudsToOrigin() {
-    const overlay = document.getElementById("cloudTransition");
-    if (!overlay) return;
-
-    overlay.classList.remove("is-running", "is-opening", "is-entering", "is-active");
+    isTransitioning = false;
+    const container = getCloudContainer();
+    clearCloudStates(container);
+    void container.offsetWidth;
   }
 
+  function revealElementAfterDelay(el, delayMs = 300) {
+    if (!el) return;
+    el.classList.add("is-hidden");
+    el.classList.remove("is-visible");
+    setTimeout(() => {
+      el.classList.remove("is-hidden");
+      el.classList.add("is-visible");
+    }, delayMs);
+  }
+
+  function initPageArrival() {
+    let shouldOpen = false;
+    try {
+      if (sessionStorage.getItem(ARRIVAL_KEY) === "1") {
+        shouldOpen = true;
+        sessionStorage.removeItem(ARRIVAL_KEY);
+      }
+    } catch (e) {}
+
+    if (shouldOpen) {
+      openCloudsOnCurrentPage(80);
+    } else {
+      resetCloudsToOrigin();
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", initPageArrival);
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) {
+      initPageArrival();
+    }
+  });
+
   return {
-    revealElementAfterDelay,
     playCloudTransition,
-    openCloudsOnPageEnter,
-    resetCloudsToOrigin
+    openCloudsOnCurrentPage,
+    resetCloudsToOrigin,
+    revealElementAfterDelay
   };
 })();

@@ -4,8 +4,6 @@ const HomePageApp = (() => {
     buttonText: "Khám phá trạm trải nghiệm",
     buttonDelayMs: 650,
     nextPageUrl: "station.html",
-    // Để trống "" nếu chưa có ảnh nền riêng -> sẽ tự dùng nền gradient bầu trời mặc định
-    // Khi có ảnh nền, điền ví dụ: "assets/decor/bg-home.jpg"
     backgroundUrl: "",
     decorItems: []
   };
@@ -56,12 +54,11 @@ const HomePageApp = (() => {
     }
   }
 
-  function resetTransitionState() {
+  function resetHomeButton() {
     const btnEl = document.getElementById("exploreBtn");
     if (btnEl) {
       btnEl.disabled = false;
     }
-    WebEffects.resetCloudsToOrigin();
   }
 
   function bindEvents() {
@@ -71,15 +68,21 @@ const HomePageApp = (() => {
       btnEl.disabled = true;
       WebEffects.playCloudTransition(() => {
         window.location.href = config.nextPageUrl;
-      }, 920, 920);
+      }, 960, 80);
     });
 
-    window.addEventListener("pageshow", () => {
-      resetButtonState();
+    window.addEventListener("pageshow", (event) => {
+      resetHomeButton();
+      if (event.persisted && typeof WebEffects !== "undefined" && WebEffects.resetCloudsToOrigin) {
+        WebEffects.resetCloudsToOrigin();
+      }
     });
   }
 
   function init() {
+    const stage = document.getElementById("homeStage");
+    if (!stage) return;
+
     setBackgroundImage(config.backgroundUrl);
     renderDecorItems(config.decorItems);
     applyContent();
@@ -98,34 +101,20 @@ const HomePageApp = (() => {
 
 document.addEventListener("DOMContentLoaded", HomePageApp.init);
 
-function resetButtonState() {
-    const btnEl = document.getElementById("exploreBtn");
-    const overlay = document.getElementById("cloudTransition");
-    if (btnEl) {
-      btnEl.disabled = false;
-    }
-    if (overlay) {
-      overlay.classList.remove("is-running", "is-active");
-    }
-  }
-
-  const StationPageApp = (() => {
+const StationPageApp = (() => {
   const stationConfig = {
-    backgroundUrl: "", // Điền đường dẫn ảnh nền nếu có, để trống sẽ dùng nền gradient mặc định
+    backgroundUrl: "",
     station1Url: "tram-1.html",
     station2Url: "tram-2.html",
     station1DelayMs: 400,
     station2DelayMs: 550
   };
 
-  function resetStationState() {
+  function resetStationButtons() {
     const btn1 = document.getElementById("station1Btn");
     const btn2 = document.getElementById("station2Btn");
     if (btn1) btn1.disabled = false;
     if (btn2) btn2.disabled = false;
-    if (typeof WebEffects !== "undefined" && WebEffects.resetCloudsToOrigin) {
-      WebEffects.resetCloudsToOrigin();
-    }
   }
 
   function bindStationButton(btnEl, targetUrl) {
@@ -138,7 +127,7 @@ function resetButtonState() {
 
       WebEffects.playCloudTransition(() => {
         window.location.href = targetUrl;
-      }, 920, 920);
+      }, 960, 80);
     });
   }
 
@@ -159,7 +148,12 @@ function resetButtonState() {
     WebEffects.revealElementAfterDelay(btn1, stationConfig.station1DelayMs);
     WebEffects.revealElementAfterDelay(btn2, stationConfig.station2DelayMs);
 
-    window.addEventListener("pageshow", resetStationState);
+    window.addEventListener("pageshow", (event) => {
+      resetStationButtons();
+      if (event.persisted && typeof WebEffects !== "undefined" && WebEffects.resetCloudsToOrigin) {
+        WebEffects.resetCloudsToOrigin();
+      }
+    });
   }
 
   return { init };
@@ -171,13 +165,12 @@ const StationDetailApp = (() => {
   const STORAGE_KEY = "visited_stations_v1";
 
   const detailConfig = {
-    // Dán link CSV (File -> Share -> Publish to web -> chọn Sheet -> Comma-separated values (.csv))
-    sheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQSLGZ0HNO25v40lkQn2Y2WC1yDicz0OEjLOaRODdy0j0V6hAYrxBC_EfsxJEKEUv4-wpLRNb_1MRgw/pub?gid=0&single=true&output=csv",
+    sheetCsvUrl:
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vQSLGZ0HNO25v40lkQn2Y2WC1yDicz0OEjLOaRODdy0j0V6hAYrxBC_EfsxJEKEUv4-wpLRNb_1MRgw/pub?gid=0&single=true&output=csv",
     fallbackContent: {
       tram1: "Nội dung Trạm 1 lấy từ Google Sheets sẽ hiển thị tại đây. Kích cỡ hình chữ nhật tự động giãn theo độ dài chữ.",
       tram2: "Nội dung Trạm 2 lấy từ Google Sheets sẽ hiển thị tại đây. Kích cỡ hình chữ nhật tự động giãn theo độ dài chữ."
-    },
-    buttonDelayMs: 450
+    }
   };
 
   function getVisitedStations() {
@@ -197,9 +190,7 @@ const StationDetailApp = (() => {
       current.push(stationId);
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(current));
-      } catch (err) {
-        // Bỏ qua nếu trình duyệt chặn storage
-      }
+      } catch (err) {}
     }
   }
 
@@ -238,29 +229,50 @@ const StationDetailApp = (() => {
     modal.setAttribute("aria-hidden", "true");
   }
 
-  function parseCsvLine(line) {
-    const result = [];
+  function parseCsvAll(csvText) {
+    const cleanText = String(csvText || "")
+      .replace(/^\uFEFF/, "")
+      .replace(/\r\n/g, "\n")
+      .replace(/\r/g, "\n");
+    const rows = [];
+    let row = [];
     let current = "";
     let inQuotes = false;
 
-    for (let i = 0; i < line.length; i += 1) {
-      const ch = line[i];
+    for (let i = 0; i < cleanText.length; i += 1) {
+      const ch = cleanText[i];
+      const next = cleanText[i + 1];
+
       if (ch === '"') {
-        if (inQuotes && line[i + 1] === '"') {
+        if (inQuotes && next === '"') {
           current += '"';
           i += 1;
         } else {
           inQuotes = !inQuotes;
         }
       } else if (ch === "," && !inQuotes) {
-        result.push(current.trim());
+        row.push(current.trim());
+        current = "";
+      } else if (ch === "\n" && !inQuotes) {
+        row.push(current.trim());
+        if (row.some((cell) => cell !== "")) {
+          rows.push(row);
+        }
+        row = [];
         current = "";
       } else {
         current += ch;
       }
     }
-    result.push(current.trim());
-    return result;
+
+    if (current.length > 0 || row.length > 0) {
+      row.push(current.trim());
+      if (row.some((cell) => cell !== "")) {
+        rows.push(row);
+      }
+    }
+
+    return rows;
   }
 
   function loadSheetContent(stationId) {
@@ -274,23 +286,27 @@ const StationDetailApp = (() => {
       return;
     }
 
-    fetch(detailConfig.sheetCsvUrl)
+    const sep = detailConfig.sheetCsvUrl.includes("?") ? "&" : "?";
+    const fetchUrl = `${detailConfig.sheetCsvUrl}${sep}_t=${Date.now()}`;
+
+    fetch(fetchUrl)
       .then((res) => {
         if (!res.ok) throw new Error("Không tải được Google Sheets");
-        return res.text();
+        return res.arrayBuffer();
       })
-      .then((csvText) => {
-        const lines = csvText.split(/\r?\n/).filter((l) => l.trim() !== "");
-        if (lines.length < 2) return;
+      .then((buffer) => {
+        const csvText = new TextDecoder("utf-8").decode(buffer);
+        const rows = parseCsvAll(csvText);
+        if (rows.length < 2) return;
 
-        const headers = parseCsvLine(lines[0]).map((h) => h.toLowerCase());
+        const headers = rows[0].map((h) => h.toLowerCase());
         const stationIdx = headers.indexOf("station");
         const contentIdx = headers.indexOf("content");
 
         if (stationIdx === -1 || contentIdx === -1) return;
 
-        for (let i = 1; i < lines.length; i += 1) {
-          const cols = parseCsvLine(lines[i]);
+        for (let i = 1; i < rows.length; i += 1) {
+          const cols = rows[i];
           if ((cols[stationIdx] || "").toLowerCase() === stationId.toLowerCase()) {
             const matchedText = cols[contentIdx] || "";
             if (matchedText.trim() !== "") {
@@ -310,20 +326,16 @@ const StationDetailApp = (() => {
     if (typeof WebEffects !== "undefined" && WebEffects.playCloudTransition) {
       WebEffects.playCloudTransition(() => {
         window.location.href = targetUrl;
-      }, 920, 920);
+      }, 960, 80);
     } else {
       window.location.href = targetUrl;
     }
   }
 
   function resetDetailButtons() {
-    const btns = document.querySelectorAll(".complete-btn, .arrow-nav");
-    btns.forEach((b) => {
+    document.querySelectorAll(".complete-btn, .arrow-nav").forEach((b) => {
       b.disabled = false;
     });
-    if (typeof WebEffects !== "undefined" && WebEffects.resetCloudsToOrigin) {
-      WebEffects.resetCloudsToOrigin();
-    }
   }
 
   function init() {
@@ -341,11 +353,13 @@ const StationDetailApp = (() => {
     const closeBtn = document.getElementById("closeResultBtn");
     const backdrop = document.getElementById("resultModalBackdrop");
 
-    if (typeof WebEffects !== "undefined" && WebEffects.revealElementAfterDelay) {
-      WebEffects.revealElementAfterDelay(completeBtn, detailConfig.buttonDelayMs);
-      WebEffects.revealElementAfterDelay(nextBtn, detailConfig.buttonDelayMs + 120);
-      WebEffects.revealElementAfterDelay(prevBtn, detailConfig.buttonDelayMs + 120);
-    }
+    // Hiển thị cố định 2 nút dưới ngay từ đầu (không hiệu ứng nhảy trễ)
+    [completeBtn, nextBtn, prevBtn].forEach((btn) => {
+      if (btn) {
+        btn.classList.remove("is-hidden");
+        btn.classList.add("is-visible");
+      }
+    });
 
     if (completeBtn) {
       completeBtn.addEventListener("click", openResultModal);
@@ -368,7 +382,12 @@ const StationDetailApp = (() => {
       });
     }
 
-    window.addEventListener("pageshow", resetDetailButtons);
+    window.addEventListener("pageshow", (event) => {
+      resetDetailButtons();
+      if (event.persisted && typeof WebEffects !== "undefined" && WebEffects.resetCloudsToOrigin) {
+        WebEffects.resetCloudsToOrigin();
+      }
+    });
   }
 
   return { init };

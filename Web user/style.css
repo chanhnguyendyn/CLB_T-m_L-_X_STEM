@@ -56,10 +56,10 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(18px, 3.5vh, 34px)
+  gap: clamp(18px, 3.5vh, 34px);
 }
 
-/* Tiêu đề cong nhẹ theo vòng cung (mẫu hình 2) */
+/* Tiêu đề cong nhẹ theo vòng cung */
 .curved-title {
   width: 100%;
   max-width: 1080px;
@@ -75,7 +75,7 @@ body {
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.28));
 }
 
-/* Nút bấm chọn (mẫu hình 3) */
+/* Nút bấm chọn ở trang chủ */
 .cta-btn {
   padding: clamp(10px, 1.8vw, 15px) clamp(22px, 4vw, 38px);
   border-radius: 999px;
@@ -111,217 +111,319 @@ body {
   transform: translateY(0);
 }
 
-/* Lớp phủ hiệu ứng đám mây lướt ngang chuyển trang */
+/* =========================================================
+   HIỆU ỨNG ĐÁM MÂY CHUYỂN TRANG (6 MẢNG MÂY CHE KÍN MÀN HÌNH)
+   ========================================================= */
 .cloud-transition {
   position: fixed;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
   overflow: hidden;
-  display: none;
-}
-
-.cloud-transition.is-active {
-  display: block;
-  pointer-events: auto;
 }
 
 .cloud-piece {
- position: absolute;
-  width: 78vw;
-  min-width: 380px;
-  max-width: 980px;
+  position: absolute;
+  width: 82vw;
+  min-width: 580px;
+  max-width: none;
   height: auto;
-  opacity: 1;
-  user-select: none;
   will-change: transform;
+  transform: translateX(0) scale(1);
+}
+
+/* Mảng bên trái (từ đỉnh xuống thân dưới) */
+.cloud-9 {
+  top: -30vh;
+  left: -86vw;
+}
+
+.cloud-11 {
+  top: -26vh;
+  left: -85vw;
+}
+
+.cloud-7 {
+  top: -18vh;
+  left: -84vw;
 }
 
 .cloud-1 {
-  top: -6%;
-  right: -78vw;
-}
-
-.cloud-2 {
-  top: 19%;
-  left: -78vw;
+  top: -4vh;
+  left: -82vw;
 }
 
 .cloud-3 {
-  top: 44%;
+  top: 24vh;
+  left: -84vw;
+}
+
+.cloud-5 {
+  top: 56vh;
+  left: -82vw;
+}
+
+/* Mảng bên phải (từ đỉnh xuống đáy) */
+.cloud-10 {
+  top: -30vh;
+  right: -86vw;
+}
+
+.cloud-8 {
+  top: -16vh;
+  right: -84vw;
+}
+
+.cloud-2 {
+  top: 4vh;
   right: -82vw;
 }
 
 .cloud-4 {
-  top: 66%;
-  left: -82vw;
+  top: 34vh;
+  right: -84vw;
 }
 
-/* Khi kích hoạt: trượt vào phủ kín màn hình và giữ nguyên (forwards) */
-.cloud-transition.is-running .cloud-1 {
-  animation: cloudInFromRight1 0.85s cubic-bezier(0.22, 0.85, 0.36, 1) forwards;
+.cloud-6 {
+  bottom: -12vh;
+  right: -82vw;
 }
 
-.cloud-transition.is-running .cloud-3 {
-  animation: cloudInFromRight3 0.9s cubic-bezier(0.22, 0.85, 0.36, 1) 0.08s forwards;
+/* Đóng: chạy vào phủ kín toàn màn hình và giữ nguyên */
+.cloud-transition.is-closing .cloud-9 {
+  animation: cloudCloseLeftPeak 0.83s cubic-bezier(0.22, 0.85, 0.36, 1) forwards;
 }
 
-.cloud-transition.is-running .cloud-2 {
-  animation: cloudInFromLeft2 0.88s cubic-bezier(0.22, 0.85, 0.36, 1) 0.04s forwards;
+.cloud-transition.is-closing .cloud-11 {
+  animation: cloudCloseLeftCenterTop 0.84s cubic-bezier(0.22, 0.85, 0.36, 1) 0.015s forwards;
 }
 
-.cloud-transition.is-running .cloud-4 {
-  animation: cloudInFromLeft4 0.92s cubic-bezier(0.22, 0.85, 0.36, 1) 0.12s forwards;
+.cloud-transition.is-closing .cloud-7 {
+  animation: cloudCloseLeftTop 0.84s cubic-bezier(0.22, 0.85, 0.36, 1) 0.02s forwards;
 }
 
-@keyframes cloudInFromRight1 {
-  0% {
-    transform: translateX(0) scale(1.1);
-  }
-  100% {
-    transform: translateX(-82vw) scale(1.22);
-  }
+.cloud-transition.is-closing .cloud-1 {
+  animation: cloudCloseLeftA 0.85s cubic-bezier(0.22, 0.85, 0.36, 1) 0.04s forwards;
 }
 
-@keyframes cloudInFromRight3 {
-  0% {
-    transform: translateX(0) scale(1.12);
-  }
-  100% {
-    transform: translateX(-86vw) scale(1.25);
-  }
+.cloud-transition.is-closing .cloud-3 {
+  animation: cloudCloseLeftB 0.88s cubic-bezier(0.22, 0.85, 0.36, 1) 0.07s forwards;
 }
 
-@keyframes cloudInFromLeft2 {
-  0% {
-    transform: translateX(0) scale(1.14);
-  }
-  100% {
-    transform: translateX(82vw) scale(1.24);
-  }
+.cloud-transition.is-closing .cloud-5 {
+  animation: cloudCloseLeftA 0.9s cubic-bezier(0.22, 0.85, 0.36, 1) 0.1s forwards;
 }
 
-@keyframes cloudInFromLeft4 {
-  0% {
-    transform: translateX(0) scale(1.16);
-  }
-  100% {
-    transform: translateX(86vw) scale(1.28);
-  }
+.cloud-transition.is-closing .cloud-10 {
+  animation: cloudCloseRightPeak 0.83s cubic-bezier(0.22, 0.85, 0.36, 1) 0.01s forwards;
 }
 
-/* Khi quay về chỗ cũ / mở ra */
-.cloud-transition.is-resetting .cloud-1,
-.cloud-transition.is-resetting .cloud-2,
-.cloud-transition.is-resetting .cloud-3,
-.cloud-transition.is-resetting .cloud-4 {
+.cloud-transition.is-closing .cloud-8 {
+  animation: cloudCloseRightTop 0.85s cubic-bezier(0.22, 0.85, 0.36, 1) 0.03s forwards;
+}
+
+.cloud-transition.is-closing .cloud-2 {
+  animation: cloudCloseRightA 0.86s cubic-bezier(0.22, 0.85, 0.36, 1) 0.06s forwards;
+}
+
+.cloud-transition.is-closing .cloud-4 {
+  animation: cloudCloseRightB 0.89s cubic-bezier(0.22, 0.85, 0.36, 1) 0.09s forwards;
+}
+
+.cloud-transition.is-closing .cloud-6 {
+  animation: cloudCloseRightA 0.92s cubic-bezier(0.22, 0.85, 0.36, 1) 0.12s forwards;
+}
+
+/* Trạng thái đứng yên khi đã che kín (dùng lúc vừa sang trang mới) */
+.cloud-transition.is-covered .cloud-9,
+.cloud-transition.is-covered .cloud-7 {
   animation: none;
-  transform: translateX(0) scale(1);
+  transform: translateX(88vw) scale(1.42);
 }
 
-@media (max-width: 640px) {
-  .cloud-piece {
-    width: 115vw;
-  }
+.cloud-transition.is-covered .cloud-11 {
+  animation: none;
+  transform: translateX(92vw) scale(1.45);
+}
 
-  .cloud-1 {
-    right: -115vw;
-  }
+.cloud-transition.is-covered .cloud-1,
+.cloud-transition.is-covered .cloud-5 {
+  animation: none;
+  transform: translateX(86vw) scale(1.32);
+}
 
-  .cloud-3 {
-    right: -120vw;
-  }
+.cloud-transition.is-covered .cloud-3 {
+  animation: none;
+  transform: translateX(90vw) scale(1.34);
+}
 
-  .cloud-2 {
-    left: -115vw;
-  }
+.cloud-transition.is-covered .cloud-10,
+.cloud-transition.is-covered .cloud-8 {
+  animation: none;
+  transform: translateX(-88vw) scale(1.42);
+}
 
-  .cloud-4 {
-    left: -120vw;
-  }
+.cloud-transition.is-covered .cloud-2,
+.cloud-transition.is-covered .cloud-6 {
+  animation: none;
+  transform: translateX(-86vw) scale(1.32);
+}
+
+.cloud-transition.is-covered .cloud-4 {
+  animation: none;
+  transform: translateX(-90vw) scale(1.34);
+}
+
+/* Mở: bung từ trạng thái che kín về vị trí ban đầu trên trang mới */
+.cloud-transition.is-opening .cloud-9 {
+  animation: cloudOpenLeftPeak 0.83s cubic-bezier(0.22, 0.85, 0.36, 1) forwards;
+}
+
+.cloud-transition.is-opening .cloud-11 {
+  animation: cloudOpenLeftCenterTop 0.84s cubic-bezier(0.22, 0.85, 0.36, 1) 0.015s forwards;
+}
+
+.cloud-transition.is-opening .cloud-7 {
+  animation: cloudOpenLeftTop 0.84s cubic-bezier(0.22, 0.85, 0.36, 1) 0.02s forwards;
 }
 
 .cloud-transition.is-opening .cloud-1 {
-  animation: cloudOutToRight1 0.85s cubic-bezier(0.22, 0.85, 0.36, 1) forwards;
+  animation: cloudOpenLeftA 0.85s cubic-bezier(0.22, 0.85, 0.36, 1) 0.04s forwards;
 }
 
 .cloud-transition.is-opening .cloud-3 {
-  animation: cloudOutToRight3 0.9s cubic-bezier(0.22, 0.85, 0.36, 1) 0.06s forwards;
+  animation: cloudOpenLeftB 0.88s cubic-bezier(0.22, 0.85, 0.36, 1) 0.07s forwards;
+}
+
+.cloud-transition.is-opening .cloud-5 {
+  animation: cloudOpenLeftA 0.9s cubic-bezier(0.22, 0.85, 0.36, 1) 0.1s forwards;
+}
+
+.cloud-transition.is-opening .cloud-10 {
+  animation: cloudOpenRightPeak 0.83s cubic-bezier(0.22, 0.85, 0.36, 1) 0.01s forwards;
+}
+
+.cloud-transition.is-opening .cloud-8 {
+  animation: cloudOpenRightTop 0.85s cubic-bezier(0.22, 0.85, 0.36, 1) 0.03s forwards;
 }
 
 .cloud-transition.is-opening .cloud-2 {
-  animation: cloudOutToLeft2 0.88s cubic-bezier(0.22, 0.85, 0.36, 1) 0.04s forwards;
+  animation: cloudOpenRightA 0.86s cubic-bezier(0.22, 0.85, 0.36, 1) 0.06s forwards;
 }
 
 .cloud-transition.is-opening .cloud-4 {
-  animation: cloudOutToLeft4 0.92s cubic-bezier(0.22, 0.85, 0.36, 1) 0.1s forwards;
+  animation: cloudOpenRightB 0.89s cubic-bezier(0.22, 0.85, 0.36, 1) 0.09s forwards;
 }
 
-@keyframes cloudOutToRight1 {
-  0% {
-    transform: translateX(-82vw) scale(1.22);
+.cloud-transition.is-opening .cloud-6 {
+  animation: cloudOpenRightA 0.92s cubic-bezier(0.22, 0.85, 0.36, 1) 0.12s forwards;
+}
+
+@keyframes cloudCloseLeftPeak {
+  0% { transform: translateX(0) scale(1.12); }
+  100% { transform: translateX(88vw) scale(1.42); }
+}
+
+@keyframes cloudCloseLeftCenterTop {
+  0% { transform: translateX(0) scale(1.12); }
+  100% { transform: translateX(92vw) scale(1.45); }
+}
+
+@keyframes cloudCloseLeftTop {
+  0% { transform: translateX(0) scale(1.1); }
+  100% { transform: translateX(88vw) scale(1.42); }
+}
+
+@keyframes cloudCloseLeftA {
+  0% { transform: translateX(0) scale(1.05); }
+  100% { transform: translateX(86vw) scale(1.32); }
+}
+
+@keyframes cloudCloseLeftB {
+  0% { transform: translateX(0) scale(1.05); }
+  100% { transform: translateX(90vw) scale(1.34); }
+}
+
+@keyframes cloudCloseRightPeak {
+  0% { transform: translateX(0) scale(1.12); }
+  100% { transform: translateX(-88vw) scale(1.42); }
+}
+
+@keyframes cloudCloseRightTop {
+  0% { transform: translateX(0) scale(1.1); }
+  100% { transform: translateX(-88vw) scale(1.42); }
+}
+
+@keyframes cloudCloseRightA {
+  0% { transform: translateX(0) scale(1.05); }
+  100% { transform: translateX(-86vw) scale(1.32); }
+}
+
+@keyframes cloudCloseRightB {
+  0% { transform: translateX(0) scale(1.05); }
+  100% { transform: translateX(-90vw) scale(1.34); }
+}
+
+@keyframes cloudOpenLeftPeak {
+  0% { transform: translateX(88vw) scale(1.42); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes cloudOpenLeftCenterTop {
+  0% { transform: translateX(92vw) scale(1.45); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes cloudOpenLeftTop {
+  0% { transform: translateX(88vw) scale(1.42); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes cloudOpenLeftA {
+  0% { transform: translateX(86vw) scale(1.32); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes cloudOpenLeftB {
+  0% { transform: translateX(90vw) scale(1.34); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes cloudOpenRightPeak {
+  0% { transform: translateX(-88vw) scale(1.42); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes cloudOpenRightTop {
+  0% { transform: translateX(-88vw) scale(1.42); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes cloudOpenRightA {
+  0% { transform: translateX(-86vw) scale(1.32); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes cloudOpenRightB {
+  0% { transform: translateX(-90vw) scale(1.34); }
+  100% { transform: translateX(0) scale(1); }
+}
+@media (max-width: 640px) {
+  .cloud-piece {
+    width: 115vw;
+    min-width: 360px;
   }
-  100% {
-    transform: translateX(0) scale(1.05);
-  }
 }
 
-@keyframes cloudOutToRight3 {
-  0% {
-    transform: translateX(-86vw) scale(1.25);
-  }
-  100% {
-    transform: translateX(0) scale(1.12);
-  }
-}
-
-@keyframes cloudOutToLeft2 {
-  0% {
-    transform: translateX(82vw) scale(1.24);
-  }
-  100% {
-    transform: translateX(0) scale(1.14);
-  }
-}
-
-@keyframes cloudOutToLeft4 {
-  0% {
-    transform: translateX(86vw) scale(1.28);
-  }
-  100% {
-    transform: translateX(0) scale(1.16);
-  }
-}
-
-/* Khi vừa vào trang mới: mây đang ở vị trí che kín rồi mở ngược ra */
-.cloud-transition.is-entering .cloud-1 {
-  transform: translateX(-82vw) scale(1.22);
-  animation: cloudOutToRight1 0.85s cubic-bezier(0.22, 0.85, 0.36, 1) forwards;
-}
-
-.cloud-transition.is-entering .cloud-3 {
-  transform: translateX(-86vw) scale(1.25);
-  animation: cloudOutToRight3 0.9s cubic-bezier(0.22, 0.85, 0.36, 1) 0.06s forwards;
-}
-
-.cloud-transition.is-entering .cloud-2 {
-  transform: translateX(82vw) scale(1.24);
-  animation: cloudOutToLeft2 0.88s cubic-bezier(0.22, 0.85, 0.36, 1) 0.04s forwards;
-}
-
-.cloud-transition.is-entering .cloud-4 {
-  transform: translateX(86vw) scale(1.28);
-  animation: cloudOutToLeft4 0.92s cubic-bezier(0.22, 0.85, 0.36, 1) 0.1s forwards;
-}
-
-/* Màn hình máy tính bảng / laptop vừa */
 @media (min-width: 641px) and (max-width: 1100px) {
   .curved-title-text {
     font-size: 48px;
   }
 }
 
-
+/* =========================================================
+   TRANG CHỌN TRẠM (station.html)
+   ========================================================= */
 .station-grid {
   position: relative;
   z-index: 10;
@@ -413,6 +515,9 @@ body {
   }
 }
 
+/* =========================================================
+   TRANG CHI TIẾT TRẠM (tram-1.html & tram-2.html)
+   ========================================================= */
 .detail-stage {
   align-items: flex-start;
   overflow-y: auto;
@@ -490,7 +595,8 @@ body {
   text-align: center;
   cursor: pointer;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
-  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.45s ease;
+  opacity: 1;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .detail-controls-reverse .complete-btn {
@@ -498,70 +604,72 @@ body {
   margin-right: clamp(0px, 4vw, 48px);
 }
 
-.complete-btn.is-visible:hover,
-.arrow-nav.is-visible:hover {
+.complete-btn:hover,
+.arrow-nav:hover {
   transform: translateY(-3px) scale(1.02);
   filter: brightness(1.03);
 }
 
-.complete-btn.is-visible:active,
-.arrow-nav.is-visible:active {
+.complete-btn:active,
+.arrow-nav:active {
   transform: translateY(1px) scale(0.99);
 }
 
 /* Nút mũi tên điều hướng qua lại giữa 2 trạm */
 .arrow-nav {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: none;
-  background: linear-gradient(90deg, #ffe066 0%, #ffc25c 52%, #ff9d5c 100%);
+  background: linear-gradient(90deg, #ffe066 0%, #ffc25c 55%, #ff9d5c 100%);
   color: #111111;
-  font-size: clamp(16px, 2.1vw, 28px);
+  font-size: clamp(16px, 2vw, 24px);
   font-weight: 500;
   line-height: 1.25;
   text-align: center;
   cursor: pointer;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
-  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.45s ease;
-}
-
-.arrow-right {
-  padding: clamp(12px, 1.5vw, 16px) clamp(20px, 2.4vw, 30px);
-  border-radius: 14px 0 0 14px;
-  margin-right: clamp(46px, 5.5vw, 72px);
-}
-
-.arrow-right::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  transform: translateY(-50%);
-  border-top: clamp(34px, 4.4vw, 56px) solid transparent;
-  border-bottom: clamp(34px, 4.4vw, 56px) solid transparent;
-  border-left: clamp(44px, 5.6vw, 72px) solid #ff9d5c;
-}
-
-.arrow-left {
-  padding: clamp(12px, 1.5vw, 16px) clamp(20px, 2.4vw, 30px);
-  border-radius: 0 14px 14px 0;
-  margin-left: clamp(46px, 5.5vw, 72px);
-}
-
-.arrow-left::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  transform: translateY(-50%);
-  border-top: clamp(34px, 4.4vw, 56px) solid transparent;
-  border-bottom: clamp(34px, 4.4vw, 56px) solid transparent;
-  border-right: clamp(44px, 5.6vw, 72px) solid #ff9d5c;
+  opacity: 1;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .arrow-label {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: block;
+}
+
+.arrow-shape {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 128%;
+  width: auto;
+  pointer-events: none;
+}
+
+/* Mũi tên phải ở Trạm 1 */
+.arrow-right {
+  padding: 14px 24px;
+  border-radius: 16px 0 0 16px;
+  margin-right: clamp(44px, 5vw, 68px);
+  background: linear-gradient(90deg, #ffe066 0%, #ffd25c 52%, #ffc25c 100%);
+}
+
+.arrow-shape-right {
+  left: calc(100% - 1px);
+}
+
+/* Mũi tên trái ở Trạm 2 */
+.arrow-left {
+  padding: 14px 24px;
+  border-radius: 0 16px 16px 0;
+  margin-left: clamp(44px, 5vw, 68px);
+}
+
+.arrow-shape-left {
+  right: calc(100% - 1px);
 }
 
 /* Box thông báo hoàn thành (1 tick hoặc 2 tick) */
@@ -658,11 +766,10 @@ body {
   .arrow-right,
   .arrow-left {
     margin: 0 auto;
-    border-radius: 14px;
+    border-radius: 16px;
   }
 
-  .arrow-right::after,
-  .arrow-left::before {
+  .arrow-shape {
     display: none;
   }
 }

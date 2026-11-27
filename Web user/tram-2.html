@@ -21,13 +21,25 @@
       </div>
 
       <div class="detail-controls detail-controls-reverse">
-        <button type="button" class="arrow-nav arrow-left is-hidden" id="prevStationBtn" data-target="tram-1.html">
+        <button type="button" class="arrow-nav arrow-left" id="prevStationBtn" data-target="tram-1.html">
+          <svg class="arrow-shape arrow-shape-left" viewBox="0 0 110 120" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="arrowGradLeft" x1="100%" y1="0%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#ffe066" />
+                <stop offset="100%" stop-color="#ff9d5c" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M110 14 L68 14 L68 6 C68 1 63 -2 59 1 L6 54 C3 57 3 63 6 66 L59 119 C63 122 68 119 68 114 L68 106 L110 106 Z"
+              fill="url(#arrowGradLeft)"
+            />
+          </svg>
           <span class="arrow-label">
             Quay về trạm 1:<br />“Đất nặn cảm xúc”
           </span>
         </button>
 
-        <button type="button" class="complete-btn is-hidden" id="completeGameBtn">
+        <button type="button" class="complete-btn" id="completeGameBtn">
           Hoàn tất trò chơi<br />Nhận quà
         </button>
       </div>
@@ -43,12 +55,19 @@
     </div>
   </main>
 
-  <div class="cloud-transition" id="cloudTransition" aria-hidden="true">
-    <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-1" />
-    <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-2" />
-    <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-3" />
-    <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-4" />
-  </div>
+ <div class="cloud-transition" id="cloudTransition" aria-hidden="true">
+  <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-1" />
+  <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-2" />
+  <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-3" />
+  <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-4" />
+  <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-5" />
+  <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-6" />
+  <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-7" />
+  <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-8" />
+  <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-9" />
+  <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-10" />
+  <img src="assets/ui/decor/clouds/Cloud-1.png" alt="" class="cloud-piece cloud-11" />
+</div>
 
   <script src="effects.js"></script>
   <script src="main.js"></script>
